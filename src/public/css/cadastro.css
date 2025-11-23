@@ -1,0 +1,26 @@
+/* Estilos específicos do cadastro */
+
+.form-group-inline {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group-inline .form-group {
+    flex: 1; /* Faz os campos dividirem o espaço */
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+.link-secundario {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+.link-secundario p {
+    margin: 0;
+}

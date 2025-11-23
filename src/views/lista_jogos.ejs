@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sala de Jogos - EducaTech</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <div class="flex justify-between" style="align-items: center; margin-bottom: 20px;">
+                <h2>🎮 Sala de Jogos</h2>
+                <a href="/aluno/opcoes" class="btn btn-secondary btn-small">Voltar ao Menu</a>
+            </div>
+
+            <p class="text-center mb-4">Bem-vindo! Escolha qual desafio você quer enfrentar hoje:</p>
+            <hr style="border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+
+                <!-- Memory Games -->
+                <% if (memoryGames && memoryGames.length> 0) { %>
+                    <% memoryGames.forEach(game=> { %>
+                        <div
+                            style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); width: 250px; padding: 15px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);">
+                            <div
+                                style="width: 100%; height: 150px; background: #f0f9ff; display: flex; align-items: center; justify-content: center; font-size: 3rem; border-radius: 4px; margin-bottom: 10px;">
+                                🧠
+                            </div>
+                            <h3 style="font-size: 1.1rem; margin-bottom: 10px; flex-grow: 1;">
+                                <%= game.title %>
+                            </h3>
+                            <a href="/jogo/memoria/<%= game.id %>" class="btn btn-primary btn-small"
+                                style="text-align: center;">JOGAR
+                                AGORA</a>
+                        </div>
+                        <% }) %>
+                            <% } %>
+
+                                <!-- Quizzes -->
+                                <% if (quizzes && quizzes.length> 0) { %>
+                                    <% quizzes.forEach(quiz=> { %>
+                                        <div
+                                            style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); width: 250px; padding: 15px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);">
+                                            <img src="<%= quiz.url_imagem ? quiz.url_imagem : 'https://via.placeholder.com/250x150?text=Quiz' %>"
+                                                alt="Imagem do Jogo"
+                                                style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px; margin-bottom: 10px;">
+
+                                            <h3 style="font-size: 1.1rem; margin-bottom: 10px; flex-grow: 1;">
+                                                <%= quiz.pergunta %>
+                                            </h3>
+
+                                            <a href="/jogo/quiz/<%= quiz.id_quiz %>" class="btn btn-primary btn-small"
+                                                style="text-align: center;">JOGAR AGORA</a>
+                                        </div>
+                                        <% }) %>
+                                            <% } %>
+
+                                                <!-- No games message -->
+                                                <% if ((!quizzes || quizzes.length===0) && (!memoryGames ||
+                                                    memoryGames.length===0)) { %>
+                                                    <div class="text-center"
+                                                        style="color: var(--text-muted); width: 100%;">
+                                                        <h3>Nenhum jogo disponível no momento.</h3>
+                                                        <p>Peça ao seu professor para cadastrar novos desafios!</p>
+                                                    </div>
+                                                    <% } %>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

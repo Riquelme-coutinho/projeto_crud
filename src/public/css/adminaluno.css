@@ -1,0 +1,113 @@
+/* --- Configurações Gerais --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* --- Container Principal --- */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 25px 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+}
+
+/* --- Tabela de Alunos --- */
+.alunos-table {
+    width: 100%;
+    border-collapse: collapse; /* Remove espaço entre bordas */
+    margin-bottom: 20px;
+}
+
+.alunos-table th,
+.alunos-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* Cabeçalho da Tabela */
+.alunos-table thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #555;
+    border-bottom-width: 2px;
+}
+
+/* Corpo da Tabela (Zebra Striping) */
+.alunos-table tbody tr:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+.alunos-table tbody tr:hover {
+    background-color: #f1f7ff; /* Destaque azul claro ao passar o mouse */
+}
+
+/* --- Coluna de Ações --- */
+.actions-links a {
+    color: #007bff; /* Azul para "Editar" */
+    text-decoration: none;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.actions-links a:hover {
+    text-decoration: underline;
+}
+
+/* Botão "Excluir" (estilizado como link de perigo) */
+.link-button {
+    background: none;
+    border: none;
+    color: #dc3545; /* Vermelho para "Excluir" */
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    font-size: 1em; /* Garante que tenha o mesmo tamanho do texto */
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.link-button:hover {
+    color: #a71d2a; /* Vermelho mais escuro */
+    text-decoration: underline;
+}
+
+/* --- Botão "Voltar" --- */
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color 0.2s;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d; /* Cinza */
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Quiz</title>
+    </head>
+<body>
+    <h2>Criar Novo Quiz (True/False)</h2>
+    
+    <form action="/admin/quiz/novo" method="POST">
+        <div>
+            <label for="pergunta">Pergunta:</label><br>
+            <input type="text" id="pergunta" name="pergunta" required style="width: 400px;">
+        </div>
+        <br>
+        <div>
+            <label for="url_imagem">URL da Imagem:</label><br>
+            <input type="text" id="url_imagem" name="url_imagem" style="width: 400px;">
+        </div>
+        <br>
+        <div>
+            <label for="resposta_correta">Resposta Correta:</label><br>
+            <select id="resposta_correta" name="resposta_correta">
+                <option value="true">True (Verdadeiro)</option>
+                <option value="false">False (Falso)</option>
+            </select>
+        </div>
+        <br>
+        <button type="submit">Salvar Quiz</button>
+    </form>
+
+    <br>
+    <a href="/admin">Voltar ao Painel</a>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+/* Configuração geral e fundo */
+body {
+    font-family: 'Baloo 2', cursive; /* Fonte arredondada e divertida */
+    background-color: #f0f8ff; /* Azul céu bem clarinho */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* O card principal do perfil */
+.profile-container {
+    background-color: #ffffff; /* Fundo branco */
+    width: 90%;
+    max-width: 380px;
+    padding: 25px;
+    border-radius: 25px; /* Cantos bem arredondados */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-align: center;
+    border: 4px solid #ffd700; /* Borda amarela divertida */
+}
+
+/* --- Seção do Avatar --- */
+.profile-avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Deixa o avatar redondo */
+    border: 6px solid #4caf50; /* Borda verde */
+    cursor: pointer; /* Indica que é clicável */
+    transition: transform 0.3s ease;
+}
+
+.profile-avatar img:hover {
+    transform: scale(1.1) rotate(5deg); /* Efeito divertido ao passar o mouse */
+}
+
+.profile-avatar p {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 5px;
+}
+
+/* --- Detalhes (Nome e Botão) --- */
+.profile-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Espaço entre o nome e o botão */
+    margin: 15px 0;
+}
+
+.profile-details h2 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+#edit-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#edit-btn:hover {
+    transform: scale(1.2);
+}
+
+/* --- Estatísticas (Pontos, Nível) --- */
+.profile-stats {
+    display: flex;
+    justify-content: space-around; /* Espaça os itens */
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column; /* Coloca o número em cima do texto */
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ff6347; /* Tomate (cor viva) */
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* --- Botão de Sair --- */
+.btn-logout {
+    background-color: #e74c3c; /* Vermelho para "sair" */
+    color: white;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #c0392b; /* Vermelho mais escuro */
+    transform: scale(1.05);
+}

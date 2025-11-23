@@ -1,0 +1,40 @@
+/* Adicione ao final do seu style.css */
+
+.btn-voltar {
+    display: inline-block;
+    margin-bottom: 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Caixas de resultado */
+#resultado-box {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
+
+.res-correto {
+    background-color: #28a745; /* Verde */
+    display: block;
+}
+
+.res-errado {
+    background-color: #dc3545; /* Vermelho */
+    display: block;
+}
+
+/* Ajuste para as labels ficarem lado a lado */
+.option-wrapper {
+    display: inline-block;
+    width: 45%;
+    margin: 0 2%;
+}

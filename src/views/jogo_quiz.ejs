@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - EducaTech</title>
+    <div class="flex justify-between" style="align-items: center; margin-bottom: 1rem;">
+        <span
+            style="background: var(--primary-color); color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">Questão
+            <%= index + 1 %>
+        </span>
+    </div>
+
+    <img src="<%= quiz.url_imagem ? quiz.url_imagem : 'https://via.placeholder.com/600x300?text=Sem+Imagem' %>"
+        alt="Imagem do Quiz" class="quiz-image">
+
+    <h3>
+        <%= quiz.pergunta %>
+    </h3>
+
+    <form class="quiz-form" data-id="<%= quiz.id_quiz %>">
+        <label class="quiz-option">
+            <input type="radio" name="quiz_<%= quiz.id_quiz %>" value="true">
+            <span>Verdadeiro</span>
+        </label>
+
+        <label class="quiz-option">
+            <input type="radio" name="quiz_<%= quiz.id_quiz %>" value="false">
+            <span>Falso</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary mt-4 btn-check">Conferir Resposta</button>
+    </form>
+
+    <div class="hidden result-box mt-4">
+        <p class="result-text" style="margin:0; color: inherit;"></p>
+    </div>
+    </div>
+    <% }) %>
+
+        </div>
+
+        <script>
+            document.querySelectorAll('.quiz-form').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const idQuiz = this.getAttribute('data-id');
+                    const btnCheck = this.querySelector('.btn-check');
+                    const resultBox = this.closest('.card').querySelector('.result-box');
+                    const resultText = resultBox.querySelector('.result-text');
+
+                    const opcaoSelecionada = this.querySelector(`input[name="quiz_${idQuiz}"]:checked`);
+
+                    if (!opcaoSelecionada) {
+                        alert("Por favor, selecione uma opção!");
+                        return;
+                    }
+
+                    const respostaAluno = opcaoSelecionada.value;
+
+                    // Desabilita o botão para evitar múltiplos cliques
+                    btnCheck.disabled = true;
+                    btnCheck.textContent = "Verificando...";
+
+                    fetch('/jogo/quiz/checar', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id_quiz: idQuiz, resposta: respostaAluno })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            resultBox.classList.remove('hidden');
+
+                            if (data.correto) {
+                                resultBox.className = 'result-box result-success mt-4';
+                                resultText.innerHTML = "🎉 " + data.mensagem;
+                            } else {
+                                resultBox.className = 'result-box result-error mt-4';
+                                resultText.innerHTML = "❌ " + data.mensagem;
+                            }
+
+                            btnCheck.disabled = false;
+                            btnCheck.textContent = "Conferir Resposta";
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert("Ocorreu um erro ao verificar a resposta.");
+                            btnCheck.disabled = false;
+                            btnCheck.textContent = "Conferir Resposta";
+                        });
+                });
+            });
+        </script>
+
+        </body>
+
+</html>

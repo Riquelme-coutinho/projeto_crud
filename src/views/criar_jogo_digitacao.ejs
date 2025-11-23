@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Jogo de Digitação - EducaTech</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="text-center mb-4">
+                <h2>⌨️ Novo Jogo de Digitação</h2>
+                <p>Crie um desafio de velocidade para seus alunos.</p>
+            </div>
+
+            <form action="/admin/digitacao/novo" method="POST">
+                <div class="form-group">
+                    <label for="title">Título do Jogo</label>
+                    <input type="text" id="title" name="title" required placeholder="Ex: O Rato Roeu">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descrição (Opcional)</label>
+                    <textarea id="description" name="description" rows="2" placeholder="Uma breve descrição..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="text_content">Texto para Digitar</label>
+                    <textarea id="text_content" name="text_content" rows="5" required placeholder="Digite aqui o texto que os alunos deverão copiar..."></textarea>
+                    <small style="color: #666;">Recomendamos textos curtos para iniciantes.</small>
+                </div>
+
+                <div class="form-actions">
+                    <a href="/admin" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Criar Jogo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

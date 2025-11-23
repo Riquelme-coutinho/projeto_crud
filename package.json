@@ -1,0 +1,34 @@
+{
+  "name": "projeto-educa-tech",
+  "version": "1.0.0",
+  "description": "projeto para a materia da faculdade de extensao web",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Campel0/Projeto-Programa-o-WEB.git"
+  },
+  "author": "Campelo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Campel0/Projeto-Programa-o-WEB/issues"
+  },
+  "homepage": "https://github.com/Campel0/Projeto-Programa-o-WEB#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "mysql2": "^3.15.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

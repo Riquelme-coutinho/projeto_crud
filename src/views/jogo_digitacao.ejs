@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= game.title %> - Digitação</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .typing-area {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            user-select: none;
+        }
+        .typing-input {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            resize: none;
+        }
+        .typing-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .stat-box {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        .correct { color: green; }
+        .incorrect { color: red; background: #ffcccc; }
+        
+        /* Highlight styles for the reference text */
+        span.correct-char { color: green; }
+        span.incorrect-char { color: red; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header-game">
+                <a href="/jogos" class="btn-back">⬅ Voltar</a>
+                <h2><%= game.title %></h2>
+            </div>
+            <p class="text-center"><%= game.description %></p>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <div>Tempo</div>
+                    <div class="stat-value" id="timer">0s</div>
+                </div>
+                <div class="stat-box">
+                    <div>WPM</div>
+                    <div class="stat-value" id="wpm">0</div>
+                </div>
+                <div class="stat-box">
+                    <div>Precisão</div>
+                    <div class="stat-value" id="accuracy">100%</div>
+                </div>
+            </div>
+
+            <div class="typing-area" id="quoteDisplay">
+                <!-- Texto será injetado aqui via JS para spans individuais -->
+            </div>
+
+            <textarea class="typing-input" id="quoteInput" placeholder="Comece a digitar aqui para iniciar..."></textarea>
+            
+            <div class="text-center mt-4" id="resultArea" style="display: none;">
+                <h3>🎉 Parabéns!</h3>
+                <p>Você completou o texto.</p>
+                <button onclick="location.reload()" class="btn btn-primary">Jogar Novamente</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const textToType = "<%= game.text_content %>";
+        const quoteDisplayElement = document.getElementById('quoteDisplay');
+        const quoteInputElement = document.getElementById('quoteInput');
+        const timerElement = document.getElementById('timer');
+        const wpmElement = document.getElementById('wpm');
+        const accuracyElement = document.getElementById('accuracy');
+        const resultArea = document.getElementById('resultArea');
+
+        let startTime;
+        let timerInterval;
+        let isPlaying = false;
+        let isFinished = false;
+
+        // Setup text
+        quoteDisplayElement.innerHTML = '';
+        textToType.split('').forEach(character => {
+            const characterSpan = document.createElement('span');
+            characterSpan.innerText = character;
+            quoteDisplayElement.appendChild(characterSpan);
+        });
+
+        quoteInputElement.addEventListener('input', () => {
+            if (isFinished) return;
+
+            if (!isPlaying) {
+                isPlaying = true;
+                startTime = new Date();
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+
+            const arrayQuote = quoteDisplayElement.querySelectorAll('span');
+            const arrayValue = quoteInputElement.value.split('');
+
+            let correct = true;
+            let correctChars = 0;
+
+            arrayQuote.forEach((characterSpan, index) => {
+                const character = arrayValue[index];
+                if (character == null) {
+                    characterSpan.classList.remove('correct-char');
+                    characterSpan.classList.remove('incorrect-char');
+                    correct = false;
+                } else if (character === characterSpan.innerText) {
+                    characterSpan.classList.add('correct-char');
+                    characterSpan.classList.remove('incorrect-char');
+                    correctChars++;
+                } else {
+                    characterSpan.classList.remove('correct-char');
+                    characterSpan.classList.add('incorrect-char');
+                    correct = false;
+                }
+            });
+
+            // Calculate Accuracy
+            const accuracy = arrayValue.length > 0 
+                ? Math.round((correctChars / arrayValue.length) * 100) 
+                : 100;
+            accuracyElement.innerText = accuracy + '%';
+
+            // Check Win
+            if (correct && arrayValue.length === arrayQuote.length) {
+                finishGame();
+            }
+        });
+
+        function updateTimer() {
+            const timeInSeconds = Math.floor((new Date() - startTime) / 1000);
+            timerElement.innerText = timeInSeconds + 's';
+            
+            // Calculate WPM (Words Per Minute)
+            // Assuming 5 chars = 1 word
+            const words = quoteInputElement.value.length / 5;
+            const minutes = timeInSeconds / 60;
+            const wpm = minutes > 0 ? Math.floor(words / minutes) : 0;
+            wpmElement.innerText = wpm;
+        }
+
+        function finishGame() {
+            isFinished = true;
+            clearInterval(timerInterval);
+            quoteInputElement.disabled = true;
+            resultArea.style.display = 'block';
+            
+            // TODO: Salvar pontuação via AJAX se necessário
+        }
+    </script>
+</body>
+</html>
