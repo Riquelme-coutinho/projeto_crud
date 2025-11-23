@@ -1,69 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= game.title %> - Digitação</title>
+    <title>
+        <%= game.title %> - Digitação
+    </title>
     <link rel="stylesheet" href="/css/style.css">
-    <style>
-        .typing-area {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin: 20px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            user-select: none;
-        }
-        .typing-input {
-            width: 100%;
-            height: 150px;
-            padding: 15px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.2rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            resize: none;
-        }
-        .typing-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .stat-box {
-            background: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .stat-value {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-        }
-        .correct { color: green; }
-        .incorrect { color: red; background: #ffcccc; }
-        
-        /* Highlight styles for the reference text */
-        span.correct-char { color: green; }
-        span.incorrect-char { color: red; text-decoration: underline; }
-    </style>
+    <link rel="stylesheet" href="/css/jogo_digitacao.css">
 </head>
+
 <body>
     <div class="container">
         <div class="card">
             <div class="header-game">
                 <a href="/jogos" class="btn-back">⬅ Voltar</a>
-                <h2><%= game.title %></h2>
+                <h2>
+                    <%= game.title %>
+                </h2>
             </div>
-            <p class="text-center"><%= game.description %></p>
+            <p class="text-center">
+                <%= game.description %>
+            </p>
 
             <div class="stats">
                 <div class="stat-box">
@@ -84,8 +43,9 @@
                 <!-- Texto será injetado aqui via JS para spans individuais -->
             </div>
 
-            <textarea class="typing-input" id="quoteInput" placeholder="Comece a digitar aqui para iniciar..."></textarea>
-            
+            <textarea class="typing-input" id="quoteInput"
+                placeholder="Comece a digitar aqui para iniciar..."></textarea>
+
             <div class="text-center mt-4" id="resultArea" style="display: none;">
                 <h3>🎉 Parabéns!</h3>
                 <p>Você completou o texto.</p>
@@ -149,8 +109,8 @@
             });
 
             // Calculate Accuracy
-            const accuracy = arrayValue.length > 0 
-                ? Math.round((correctChars / arrayValue.length) * 100) 
+            const accuracy = arrayValue.length > 0
+                ? Math.round((correctChars / arrayValue.length) * 100)
                 : 100;
             accuracyElement.innerText = accuracy + '%';
 
@@ -163,7 +123,7 @@
         function updateTimer() {
             const timeInSeconds = Math.floor((new Date() - startTime) / 1000);
             timerElement.innerText = timeInSeconds + 's';
-            
+
             // Calculate WPM (Words Per Minute)
             // Assuming 5 chars = 1 word
             const words = quoteInputElement.value.length / 5;
@@ -177,9 +137,10 @@
             clearInterval(timerInterval);
             quoteInputElement.disabled = true;
             resultArea.style.display = 'block';
-            
+
             // TODO: Salvar pontuação via AJAX se necessário
         }
     </script>
 </body>
+
 </html>

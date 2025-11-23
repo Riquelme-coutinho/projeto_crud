@@ -1,7 +1,7 @@
 // Middleware para checar se o usuário é um ALUNO logado
 const checarSeLogado = (req, res, next) => {
-    // Checa se está logado E se é um aluno
-    if (req.session.alunoId && req.session.role === 'aluno') {
+    // Checa se está logado (seja aluno ou professor)
+    if (req.session.alunoId && (req.session.role === 'aluno' || req.session.role === 'professor')) {
         return next(); // Se estiver logado, continue
     }
     res.redirect('/login'); // Se não, mande para a página de login

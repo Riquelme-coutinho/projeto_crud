@@ -2,6 +2,11 @@ const db = require('../config/database');
 
 // 1. MOSTRAR a página de perfil
 const getProfilePage = async (req, res) => {
+    // Se for professor, redireciona para o painel de admin
+    if (req.session.role === 'professor') {
+        return res.redirect('/admin');
+    }
+
     const userId = req.session.alunoId;
 
     try {

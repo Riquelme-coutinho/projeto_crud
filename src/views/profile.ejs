@@ -25,7 +25,9 @@
                         <% } %>
             </div>
             <div class="text-center mb-4">
-                <a href="/perfil/novo-avatar" class="btn btn-small btn-secondary">Trocar Avatar</a>
+                <form action="/perfil/avatar" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-small btn-secondary">Trocar Avatar</button>
+                </form>
             </div>
 
             <form method="POST" action="/perfil/atualizar">

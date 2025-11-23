@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= game.title %> - Palavras
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/jogo_palavras.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header-game">
+                <a href="/jogos" class="btn-back">⬅ Voltar</a>
+                <h2>
+                    <%= game.title %>
+                </h2>
+            </div>
+            <p class="text-center">
+                <%= game.description %>
+            </p>
+
+            <div class="scramble-container">
+                <div class="hint-box">
+                    <strong>Dica:</strong> <span id="hint-display">...</span>
+                </div>
+
+                <div class="word-display" id="scramble-display">
+                    <!-- Palavra embaralhada -->
+                </div>
+
+                <div class="input-area">
+                    <input type="text" class="guess-input" id="guess-input" placeholder="Sua resposta"
+                        autocomplete="off">
+                </div>
+
+                <button onclick="checkAnswer()" class="btn btn-primary">Verificar</button>
+
+                <div class="feedback mt-4" id="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const words = <% - JSON.stringify(words) %>;
+        let currentWordIndex = 0;
+        let currentWordObj = null;
+
+        function initGame() {
+            if (currentWordIndex >= words.length) {
+                document.querySelector('.scramble-container').innerHTML = `
+                    <h3>🎉 Parabéns!</h3>
+                    <p>Você completou todas as palavras.</p>
+                    <button onclick="location.reload()" class="btn btn-primary">Jogar Novamente</button>
+                `;
+                return;
+            }
+
+            currentWordObj = words[currentWordIndex];
+            document.getElementById('hint-display').innerText = currentWordObj.hint || 'Sem dica';
+            document.getElementById('scramble-display').innerText = scrambleWord(currentWordObj.word);
+            document.getElementById('guess-input').value = '';
+            document.getElementById('feedback').innerText = '';
+            document.getElementById('guess-input').focus();
+        }
+
+        function scrambleWord(word) {
+            const arr = word.split('');
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr.join('');
+        }
+
+        function checkAnswer() {
+            const input = document.getElementById('guess-input');
+            const guess = input.value.toUpperCase().trim();
+            const feedback = document.getElementById('feedback');
+
+            if (guess === currentWordObj.word) {
+                feedback.innerText = 'Correto! Próxima palavra...';
+                feedback.className = 'feedback success';
+                setTimeout(() => {
+                    currentWordIndex++;
+                    initGame();
+                }, 1500);
+            } else {
+                feedback.innerText = 'Tente novamente!';
+                feedback.className = 'feedback error';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        document.getElementById('guess-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        initGame();
+    </script>
+</body>
+
+</html>

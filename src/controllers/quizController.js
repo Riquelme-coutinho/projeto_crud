@@ -1,40 +1,8 @@
 const db = require('../config/database');
 
-// Mostra a página EJS com o formulário
-exports.getQuizForm = (req, res) => {
+// Renderiza a página do jogo de quiz
+exports.getJogoQuiz = async (req, res) => {
     try {
-        res.render('criar_quiz');
-    } catch (error) {
-        console.error('Erro ao renderizar formulário de quiz:', error);
-        res.status(500).send('Erro interno do servidor.');
-    }
-};
-
-// Salva o quiz no banco
-exports.postQuiz = async (req, res) => {
-    try {
-        const { pergunta, url_imagem, resposta_correta } = req.body;
-
-        if (!pergunta || !resposta_correta) {
-            return res.status(400).send('Pergunta e resposta correta são obrigatórias.');
-        }
-
-        await db.query(
-            'INSERT INTO quizzes (pergunta, url_imagem, resposta_correta) VALUES (?, ?, ?)',
-            [pergunta, url_imagem, resposta_correta]
-        );
-
-        res.redirect('/admin');
-    } catch (error) {
-        console.error('Erro ao salvar quiz:', error);
-        res.status(500).send('Erro ao salvar o quiz.');
-    }
-};
-
-// Busca o quiz completo para jogar (todos as perguntas)
-exports.getQuizParaJogar = async (req, res) => {
-    try {
-        // Agora buscamos TODOS os quizzes, não apenas um por ID
         const [rows] = await db.query('SELECT * FROM quizzes');
 
         if (rows.length === 0) {

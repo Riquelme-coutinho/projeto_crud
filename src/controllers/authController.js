@@ -97,8 +97,26 @@ const postRegister = async (req, res) => {
 };
 
 // 5. MOSTRAR o painel de admin
-const getAdminPage = (req, res) => {
-    res.render('admin');
+const getAdminPage = async (req, res) => {
+    try {
+        const professorId = req.session.alunoId; // ID do professor logado
+
+        // Buscar jogos criados por este professor (ou todos se for super admin, mas vamos focar no professor)
+        // Nota: Quiz e Memória não têm 'created_by' no esquema atual, então vamos listar todos ou ignorar por enquanto.
+        // Vamos focar nos novos jogos que têm 'created_by': typing, scramble, hangman, math.
+
+        const [typing] = await db.query('SELECT id, title, "digitacao" as type FROM typing_games WHERE created_by = ?', [professorId]);
+        const [scramble] = await db.query('SELECT id, title, "palavras" as type FROM scramble_games WHERE created_by = ?', [professorId]);
+        const [hangman] = await db.query('SELECT id, title, "forca" as type FROM hangman_games WHERE created_by = ?', [professorId]);
+        const [math] = await db.query('SELECT id, title, "matematica" as type FROM math_games WHERE created_by = ?', [professorId]);
+
+        const myGames = [...typing, ...scramble, ...hangman, ...math];
+
+        res.render('admin', { games: myGames });
+    } catch (error) {
+        console.error('Erro ao carregar painel admin:', error);
+        res.status(500).send('Erro interno.');
+    }
 };
 
 // 6. PROCESSAR o logout

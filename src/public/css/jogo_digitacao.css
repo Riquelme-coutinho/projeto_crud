@@ -1,0 +1,48 @@
+.typing-area {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    user-select: none;
+}
+.typing-input {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    resize: none;
+}
+.typing-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    font-weight: bold;
+}
+.stat-box {
+    background: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.stat-value {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+.correct { color: green; }
+.incorrect { color: red; background: #ffcccc; }
+
+/* Highlight styles for the reference text */
+span.correct-char { color: green; }
+span.incorrect-char { color: red; text-decoration: underline; }

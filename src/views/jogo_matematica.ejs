@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= game.title %> - Matemática
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/jogo_matematica.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header-game">
+                <a href="/jogos" class="btn-back">⬅ Voltar</a>
+                <h2>
+                    <%= game.title %>
+                </h2>
+            </div>
+            <p class="text-center">
+                <%= game.description %>
+            </p>
+
+            <div class="math-container">
+                <div class="score-board">
+                    <div class="score-item">Acertos: <span id="score">0</span></div>
+                    <div class="score-item">Questão: <span id="q-current">1</span>/<span id="q-total">?</span></div>
+                </div>
+
+                <div class="equation-box" id="equation">
+                    <!-- 2 + 2 = ? -->
+                </div>
+
+                <div>
+                    <input type="number" class="answer-input" id="answer-input" placeholder="?">
+                    <button onclick="checkAnswer()" class="btn btn-primary ml-2">Responder</button>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Config from server
+        const config = <% - game.config_json %>;
+        // config example: { operations: ['+'], min: 1, max: 10, questions: 5 }
+
+        let currentQuestion = 1;
+        let score = 0;
+        let correctAnswer = 0;
+        const totalQuestions = config.questions || 10;
+
+        document.getElementById('q-total').innerText = totalQuestions;
+
+        function generateQuestion() {
+            if (currentQuestion > totalQuestions) {
+                finishGame();
+                return;
+            }
+
+            document.getElementById('q-current').innerText = currentQuestion;
+
+            const op = config.operations[Math.floor(Math.random() * config.operations.length)];
+            const num1 = Math.floor(Math.random() * (config.max - config.min + 1)) + config.min;
+            const num2 = Math.floor(Math.random() * (config.max - config.min + 1)) + config.min;
+
+            // Avoid negative results for subtraction if desired, or division by zero
+            let n1 = num1, n2 = num2;
+
+            if (op === '-') {
+                if (n1 < n2) [n1, n2] = [n2, n1]; // Swap so result is positive
+            } else if (op === '/') {
+                // Ensure clean division
+                n1 = n2 * Math.floor(Math.random() * 5 + 1);
+            }
+
+            let displayOp = op;
+            if (op === '*') displayOp = '×';
+            if (op === '/') displayOp = '÷';
+
+            document.getElementById('equation').innerText = `${n1} ${displayOp} ${n2} = ?`;
+
+            // Calculate correct answer
+            if (op === '+') correctAnswer = n1 + n2;
+            if (op === '-') correctAnswer = n1 - n2;
+            if (op === '*') correctAnswer = n1 * n2;
+            if (op === '/') correctAnswer = n1 / n2;
+
+            document.getElementById('answer-input').value = '';
+            document.getElementById('answer-input').focus();
+        }
+
+        function checkAnswer() {
+            const input = document.getElementById('answer-input');
+            const val = parseInt(input.value);
+
+            if (isNaN(val)) return;
+
+            if (val === correctAnswer) {
+                score++;
+                document.getElementById('score').innerText = score;
+                input.style.borderColor = 'green';
+            } else {
+                input.style.borderColor = 'red';
+                alert(`Errado! A resposta era ${correctAnswer}`);
+            }
+
+            // Update progress
+            const pct = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progress').style.width = pct + '%';
+
+            currentQuestion++;
+            setTimeout(() => {
+                input.style.borderColor = '#ddd';
+                generateQuestion();
+            }, 1000);
+        }
+
+        function finishGame() {
+            document.querySelector('.math-container').innerHTML = `
+                <h3>Fim de Jogo!</h3>
+                <p>Você acertou ${score} de ${totalQuestions} questões.</p>
+                <button onclick="location.reload()" class="btn btn-primary">Jogar Novamente</button>
+            `;
+        }
+
+        document.getElementById('answer-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        generateQuestion();
+    </script>
+</body>
+
+</html>

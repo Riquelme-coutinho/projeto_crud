@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %> - EducaTech
+    </title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <h2>
+                <%= pageTitle %>
+            </h2>
+
+            <form action="<%= action %>" method="POST">
+                <div class="form-group">
+                    <label for="title">Título do Jogo</label>
+                    <input type="text" id="title" name="title" value="<%= game.title %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descrição (Opcional)</label>
+                    <textarea id="description" name="description" rows="2"><%= game.description %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="text_content">Texto para Digitação</label>
+                    <textarea id="text_content" name="text_content" rows="6"
+                        required><%= game.text_content %></textarea>
+                    <small>Este é o texto que os alunos terão que digitar.</small>
+                </div>
+
+                <div class="flex gap-4 mt-4">
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    <a href="/admin" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

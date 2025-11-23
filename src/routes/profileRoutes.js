@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const profileController = require('../controllers/profileController');
-const { checarSeLogado } = require('../middleware/authMiddleware');
+const { checarSeLogado, checarSeAdmin } = require('../middleware/authMiddleware');
 const quizController = require('../controllers/quizController');
 const memoryGameController = require('../controllers/memoryGameController');
 const gamesController = require('../controllers/gamesController');
@@ -36,16 +36,30 @@ router.get('/jogo/matematica/:id', checarSeLogado, gamesController.getMathGame);
 
 // --- Rotas de Admin para Criar Jogos (Protegidas) ---
 // TODO: Adicionar middleware para verificar se é admin de fato, se necessário
-router.get('/admin/digitacao/novo', checarSeLogado, gamesController.getCreateTyping);
-router.post('/admin/digitacao/novo', checarSeLogado, gamesController.postCreateTyping);
+router.get('/admin/digitacao/novo', checarSeAdmin, gamesController.getCreateTyping);
+router.post('/admin/digitacao/novo', checarSeAdmin, gamesController.postCreateTyping);
+router.get('/admin/digitacao/:id/editar', checarSeAdmin, gamesController.getEditTyping);
+router.post('/admin/digitacao/:id/editar', checarSeAdmin, gamesController.postEditTyping);
 
-router.get('/admin/palavras/novo', checarSeLogado, gamesController.getCreateScramble);
-router.post('/admin/palavras/novo', checarSeLogado, gamesController.postCreateScramble);
+router.get('/admin/palavras/novo', checarSeAdmin, gamesController.getCreateScramble);
+router.post('/admin/palavras/novo', checarSeAdmin, gamesController.postCreateScramble);
+router.get('/admin/palavras/:id/editar', checarSeAdmin, gamesController.getEditScramble);
+router.post('/admin/palavras/:id/editar', checarSeAdmin, gamesController.postEditScramble);
 
-router.get('/admin/forca/novo', checarSeLogado, gamesController.getCreateHangman);
-router.post('/admin/forca/novo', checarSeLogado, gamesController.postCreateHangman);
+router.get('/admin/forca/novo', checarSeAdmin, gamesController.getCreateHangman);
+router.post('/admin/forca/novo', checarSeAdmin, gamesController.postCreateHangman);
+router.get('/admin/forca/:id/editar', checarSeAdmin, gamesController.getEditHangman);
+router.post('/admin/forca/:id/editar', checarSeAdmin, gamesController.postEditHangman);
 
-router.get('/admin/matematica/novo', checarSeLogado, gamesController.getCreateMath);
-router.post('/admin/matematica/novo', checarSeLogado, gamesController.postCreateMath);
+router.get('/admin/matematica/novo', checarSeAdmin, gamesController.getCreateMath);
+router.post('/admin/matematica/novo', checarSeAdmin, gamesController.postCreateMath);
+router.get('/admin/matematica/:id/editar', checarSeAdmin, gamesController.getEditMath);
+router.post('/admin/matematica/:id/editar', checarSeAdmin, gamesController.postEditMath);
+
+// --- Rotas de Quiz ---
+router.get('/admin/quiz/novo', checarSeAdmin, quizController.getCreateQuiz);
+router.post('/admin/quiz/novo', checarSeAdmin, quizController.postCreateQuiz);
+router.get('/admin/quiz/:id/editar', checarSeAdmin, quizController.getEditQuiz);
+router.post('/admin/quiz/:id/editar', checarSeAdmin, quizController.postEditQuiz);
 
 module.exports = router;
