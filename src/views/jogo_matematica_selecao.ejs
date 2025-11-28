@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleção de Nível - EducaTech</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/jogo_matematica_selecao.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <div class="flex justify-between" style="align-items: center; margin-bottom: 20px;">
+                <h2>➗ Escolha um Desafio Matemático</h2>
+                <a href="/jogos" class="btn btn-secondary btn-small">Voltar</a>
+            </div>
+
+            <div class="selection-container">
+                <% if (levels && levels.length> 0) { %>
+                    <% levels.forEach(level=> { %>
+                        <div class="level-card">
+                            <h3 class="level-title">
+                                <%= level.title %>
+                            </h3>
+                            <div class="level-info">
+                                <% let config=level.config_json; if (typeof config==='string' )
+                                    config=JSON.parse(config); let ops=Array.isArray(config.operations) ?
+                                    config.operations.join(', ') :
+                                    config.operations;
+                                    // Map symbols
+                                    ops = ops.replace(' +', 'Soma' ).replace('-', 'Subtração'
+                                    ).replace('*', 'Multiplicação' ).replace('/', 'Divisão' ); %>
+                                    <p class="level-detail"><strong>Operações:</strong>
+                                        <%= ops %>
+                                    </p>
+                                    <p class="level-detail"><strong>Questões:</strong>
+                                        <%= config.questions %>
+                                    </p>
+                            </div>
+                            <a href="/jogo/matematica/<%= level.id %>" class="btn btn-primary btn-play">Jogar Nível</a>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p class="text-center">Nenhum nível disponível no momento.</p>
+                                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

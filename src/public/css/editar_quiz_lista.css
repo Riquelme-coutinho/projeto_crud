@@ -1,0 +1,78 @@
+.quiz-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.quiz-table th,
+.quiz-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.quiz-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.quiz-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.pergunta-cell {
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.resposta-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.resposta-true {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.resposta-false {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-editar {
+    background-color: #2196F3;
+    color: white;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-editar:hover {
+    background-color: #0b7dda;
+}
+
+.btn-voltar {
+    background-color: #757575;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.btn-voltar:hover {
+    background-color: #616161;
+}

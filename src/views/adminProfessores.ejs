@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Professores - EducaTech</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin_professores.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <div class="header-flex">
+                <h2>👥 Gerenciar Professores</h2>
+                <a href="/admin/cadastro-professor" class="btn btn-primary btn-small">➕ Novo Professor</a>
+            </div>
+            <p class="mb-4">Lista de todos os professores cadastrados no sistema.</p>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Usuário</th>
+                            <th>Admin</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% professores.forEach(prof=> { %>
+                            <tr>
+                                <td>
+                                    <%= prof.nome %>
+                                </td>
+                                <td>
+                                    <%= prof.usuario %>
+                                </td>
+                                <td>
+                                    <span class="badge <%= prof.is_admin ? 'badge-success' : 'badge-secondary' %>">
+                                        <%= prof.is_admin ? 'Sim' : 'Não' %>
+                                    </span>
+                                </td>
+                                <td class="actions-links">
+                                    <a href="/admin/professor/<%= prof.id_professor %>/editar" class="btn-icon"
+                                        title="Editar">✏️</a>
+
+                                    <form method="POST" action="/admin/professor/<%= prof.id_professor %>/excluir"
+                                        style="display: inline;"
+                                        onsubmit="return confirm('Tem certeza que deseja excluir <%= prof.nome %>? Esta ação não pode ser desfeita.');">
+                                        <button type="submit" class="btn-icon btn-delete" title="Excluir">🗑️</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+                                <% if (professores.length===0) { %>
+                                    <tr>
+                                        <td colspan="4" class="text-center">Nenhum professor encontrado.</td>
+                                    </tr>
+                                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 text-center">
+                <a href="/admin" class="btn btn-primary">Voltar ao Painel</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

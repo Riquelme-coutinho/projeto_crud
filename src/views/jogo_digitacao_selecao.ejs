@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleção de Texto - EducaTech</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/jogo_digitacao_selecao.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <div class="flex justify-between" style="align-items: center; margin-bottom: 20px;">
+                <h2>⌨️ Escolha um Texto para Praticar</h2>
+                <a href="/jogos" class="btn btn-secondary btn-small">Voltar</a>
+            </div>
+
+            <div class="selection-container">
+                <% if (texts && texts.length> 0) { %>
+                    <% texts.forEach(text=> { %>
+                        <div class="text-card">
+                            <h3 class="text-title">
+                                <%= text.title %>
+                            </h3>
+                            <p class="text-preview">
+                                <%= text.text_content.substring(0, 50) %>...
+                            </p>
+                            <a href="/jogo/digitacao/<%= text.id %>" class="btn btn-primary btn-play">Praticar Este</a>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p class="text-center">Nenhum texto disponível no momento.</p>
+                                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Níveis de Matemática - EducaTech</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_matematica_lista.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <div class="header-flex"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>➗ Editar Níveis de Matemática</h2>
+                <a href="/admin/matematica/criar" class="btn btn-primary btn-small">➕ Novo Nível</a>
+            </div>
+            <p>Gerencie os níveis de dificuldade.</p>
+            <table class="game-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Título</th>
+                        <th>Configuração</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% levels.forEach((level, index)=> { %>
+                        <tr>
+                            <td>
+                                <%= index + 1 %>
+                            </td>
+                            <td>
+                                <%= level.title %>
+                            </td>
+                            <td class="config-cell">
+                                <%= level.config_json %>
+                            </td>
+                            <td class="actions-links">
+                                <a href="/admin/matematica/<%= level.id %>/editar" class="btn-icon"
+                                    title="Editar">✏️</a>
+                                <form method="POST" action="/admin/matematica/<%= level.id %>/excluir"
+                                    style="display: inline;"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este nível?');">
+                                    <button type="submit" class="btn-icon btn-delete" title="Excluir">🗑️</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <a href="/admin" class="btn-voltar">⬅️ Voltar ao Painel Admin</a>
+        </div>
+    </div>
+</body>
+
+</html>

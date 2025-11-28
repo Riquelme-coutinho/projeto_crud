@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Palavras Embaralhadas - EducaTech</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_palavras_lista.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <div class="header-flex"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>🔠 Editar Palavras (Embaralhadas)</h2>
+                <a href="/admin/palavras/criar" class="btn btn-primary btn-small">➕ Nova Palavra</a>
+            </div>
+            <p>Gerencie as palavras do jogo.</p>
+            <table class="game-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Palavra</th>
+                        <th>Dica</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% words.forEach((word, index)=> { %>
+                        <tr>
+                            <td>
+                                <%= index + 1 %>
+                            </td>
+                            <td><strong>
+                                    <%= word.word %>
+                                </strong></td>
+                            <td>
+                                <%= word.hint || '-' %>
+                            </td>
+                            <td class="actions-links">
+                                <a href="/admin/palavras/<%= word.id %>/editar" class="btn-icon" title="Editar">✏️</a>
+                                <form method="POST" action="/admin/palavras/<%= word.id %>/excluir"
+                                    style="display: inline;"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir esta palavra?');">
+                                    <button type="submit" class="btn-icon btn-delete" title="Excluir">🗑️</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <a href="/admin" class="btn-voltar">⬅️ Voltar ao Painel Admin</a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -5,95 +5,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz - EducaTech</title>
-    <div class="flex justify-between" style="align-items: center; margin-bottom: 1rem;">
-        <span
-            style="background: var(--primary-color); color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">Questão
-            <%= index + 1 %>
-        </span>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/jogo_quiz.css">
+</head>
+
+<body>
+    <div class="quiz-container">
+        <h1 style="text-align: center; margin-bottom: 30px;">🎯 Quiz Educativo</h1>
+
+        <% quizzes.forEach((quiz, index)=> { %>
+            <div class="quiz-card quiz-step" id="step-<%= index %>" style="display: none;">
+                <span class="question-badge">Questão <%= index + 1 %> de <%= quizzes.length %></span>
+
+                <% if (quiz.url_imagem) { %>
+                    <img src="<%= quiz.url_imagem %>" alt="Imagem do Quiz" class="quiz-image">
+                    <% } %>
+
+                        <h3>
+                            <%= quiz.pergunta %>
+                        </h3>
+
+                        <form class="quiz-form" data-id="<%= quiz.id_quiz %>" data-index="<%= index %>">
+                            <label class="quiz-option">
+                                <input type="radio" name="quiz_<%= quiz.id_quiz %>" value="true">
+                                <span>✅ Verdadeiro</span>
+                            </label>
+
+                            <label class="quiz-option">
+                                <input type="radio" name="quiz_<%= quiz.id_quiz %>" value="false">
+                                <span>❌ Falso</span>
+                            </label>
+
+                            <button type="submit" class="btn btn-primary mt-4 btn-check">Conferir Resposta</button>
+                        </form>
+
+                        <div class="hidden result-box">
+                            <p class="result-text" style="margin:0; color: inherit;"></p>
+                            <div style="margin-top: 15px;">
+                                <button class="btn btn-secondary btn-prev" style="display: none; margin-right: 10px;">⬅️
+                                    Anterior</button>
+                                <button class="btn btn-secondary btn-next" style="display: none;">Próxima Pergunta
+                                    ➡️</button>
+                            </div>
+                        </div>
+            </div>
+            <% }) %>
+
+                <!-- Tela de Finalização -->
+                <div id="quiz-completion" class="quiz-card" style="display: none; text-align: center;">
+                    <h2>🎉 Parabéns!</h2>
+                    <p>Você completou o Quiz Educativo.</p>
+                    <div style="margin-top: 20px;">
+                        <a href="/jogos" class="btn btn-secondary">⬅️ Voltar aos Jogos</a>
+                        <button onclick="location.reload()" class="btn btn-primary">🔄 Jogar Novamente</button>
+                    </div>
+                </div>
     </div>
 
-    <img src="<%= quiz.url_imagem ? quiz.url_imagem : 'https://via.placeholder.com/600x300?text=Sem+Imagem' %>"
-        alt="Imagem do Quiz" class="quiz-image">
-
-    <h3>
-        <%= quiz.pergunta %>
-    </h3>
-
-    <form class="quiz-form" data-id="<%= quiz.id_quiz %>">
-        <label class="quiz-option">
-            <input type="radio" name="quiz_<%= quiz.id_quiz %>" value="true">
-            <span>Verdadeiro</span>
-        </label>
-
-        <label class="quiz-option">
-            <input type="radio" name="quiz_<%= quiz.id_quiz %>" value="false">
-            <span>Falso</span>
-        </label>
-
-        <button type="submit" class="btn btn-primary mt-4 btn-check">Conferir Resposta</button>
-    </form>
-
-    <div class="hidden result-box mt-4">
-        <p class="result-text" style="margin:0; color: inherit;"></p>
-    </div>
-    </div>
-    <% }) %>
-
-        </div>
-
-        <script>
-            document.querySelectorAll('.quiz-form').forEach(form => {
-                form.addEventListener('submit', function (e) {
-                    e.preventDefault();
-
-                    const idQuiz = this.getAttribute('data-id');
-                    const btnCheck = this.querySelector('.btn-check');
-                    const resultBox = this.closest('.card').querySelector('.result-box');
-                    const resultText = resultBox.querySelector('.result-text');
-
-                    const opcaoSelecionada = this.querySelector(`input[name="quiz_${idQuiz}"]:checked`);
-
-                    if (!opcaoSelecionada) {
-                        alert("Por favor, selecione uma opção!");
-                        return;
-                    }
-
-                    const respostaAluno = opcaoSelecionada.value;
-
-                    // Desabilita o botão para evitar múltiplos cliques
-                    btnCheck.disabled = true;
-                    btnCheck.textContent = "Verificando...";
-
-                    fetch('/jogo/quiz/checar', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id_quiz: idQuiz, resposta: respostaAluno })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            resultBox.classList.remove('hidden');
-
-                            if (data.correto) {
-                                resultBox.className = 'result-box result-success mt-4';
-                                resultText.innerHTML = "🎉 " + data.mensagem;
-                            } else {
-                                resultBox.className = 'result-box result-error mt-4';
-                                resultText.innerHTML = "❌ " + data.mensagem;
-                            }
-
-                            btnCheck.disabled = false;
-                            btnCheck.textContent = "Conferir Resposta";
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            alert("Ocorreu um erro ao verificar a resposta.");
-                            btnCheck.disabled = false;
-                            btnCheck.textContent = "Conferir Resposta";
-                        });
-                });
-            });
-        </script>
-
-        </body>
+    <script src="/js/jogo_quiz.js"></script>
+</body>
 
 </html>

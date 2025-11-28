@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= isCreate ? 'Criar Pergunta' : 'Editar Pergunta' %> - EducaTech
+    </title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_quiz_form.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <h2>
+                <%= isCreate ? '➕ Criar Nova Pergunta' : '✏️ Editar Pergunta #' + quiz.id_quiz %>
+            </h2>
+
+            <form action="<%= isCreate ? '/admin/quiz/criar' : '/admin/quiz/' + quiz.id_quiz + '/editar' %>"
+                method="POST">
+                <div class="form-group">
+                    <label for="pergunta">Pergunta *</label>
+                    <textarea id="pergunta" name="pergunta" required><%= quiz.pergunta %></textarea>
+                    <small>Digite a pergunta que será exibida aos alunos</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="url_imagem">URL da Imagem (Opcional)</label>
+                    <input type="text" id="url_imagem" name="url_imagem" value="<%= quiz.url_imagem || '' %>"
+                        placeholder="https://exemplo.com/imagem.jpg">
+                    <small>Cole o link de uma imagem para ilustrar a pergunta</small>
+                    <img id="preview" class="preview-image" src="<%= quiz.url_imagem || '' %>" alt="Preview">
+                </div>
+
+                <div class="form-group">
+                    <label for="resposta_correta">Resposta Correta *</label>
+                    <select id="resposta_correta" name="resposta_correta" required>
+                        <option value="true" <%=quiz.resposta_correta==='true' ? 'selected' : '' %>>
+                            ✅ Verdadeiro (True)
+                        </option>
+                        <option value="false" <%=quiz.resposta_correta==='false' ? 'selected' : '' %>>
+                            ❌ Falso (False)
+                        </option>
+                    </select>
+                    <small>Selecione se a afirmação é verdadeira ou falsa</small>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn-salvar">
+                        <%= isCreate ? '✨ Criar Pergunta' : '💾 Salvar Alterações' %>
+                    </button>
+                    <a href="/admin/quiz/editar" class="btn-cancelar">❌ Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Preview da imagem
+        const urlInput = document.getElementById('url_imagem');
+        const preview = document.getElementById('preview');
+
+        // Mostrar preview se já tiver URL
+        if (urlInput.value) {
+            preview.classList.add('show');
+        }
+
+        urlInput.addEventListener('input', function () {
+            if (this.value) {
+                preview.src = this.value;
+                preview.classList.add('show');
+            } else {
+                preview.classList.remove('show');
+            }
+        });
+
+        // Tratar erro de carregamento da imagem
+        preview.addEventListener('error', function () {
+            this.classList.remove('show');
+        });
+    </script>
+</body>
+
+</html>

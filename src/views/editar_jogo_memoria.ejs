@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= pageTitle %> - EducaTech
+    </title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_jogo_memoria.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <h2>
+                <%= isCreate ? '➕ ' + pageTitle : '✏️ ' + pageTitle %>
+            </h2>
+            <form action="<%= action %>" method="POST">
+                <div class="form-group">
+                    <label for="pair_name">Nome do Par</label>
+                    <input type="text" id="pair_name" name="pair_name" value="<%= card.pair_name %>" required>
+                    <small>Ex: Gato, Cachorro, Sol</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="pair_icon">Ícone (Emoji)</label>
+                    <input type="text" id="pair_icon" name="pair_icon" value="<%= card.pair_icon %>" required
+                        style="font-size: 1.5rem;">
+                    <small>Copie e cole um emoji aqui.</small>
+                </div>
+
+                <div class="flex gap-4 mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <%= isCreate ? '✨ Criar Par' : '💾 Salvar Alterações' %>
+                    </button>
+                    <a href="/admin/memoria" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

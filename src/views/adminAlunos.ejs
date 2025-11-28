@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administração de Alunos</title>
     <link rel="stylesheet" href="/css/adminaluno.css">
 </head>
+
 <body>
     <div class="container container-large">
         <h2>Gerir Alunos</h2>
-        
+
         <table class="alunos-table">
             <thead>
                 <tr>
@@ -20,29 +22,38 @@
                 </tr>
             </thead>
             <tbody>
-                <% alunos.forEach(aluno => { %>
+                <% alunos.forEach(aluno=> { %>
                     <tr>
-                        <td><%= aluno.nome %></td>
-                        <td><%= aluno.usuario %></td>
-                        <td><%= aluno.turma %></td>
+                        <td>
+                            <%= aluno.nome %>
+                        </td>
+                        <td>
+                            <%= aluno.usuario %>
+                        </td>
+                        <td>
+                            <%= aluno.turma %>
+                        </td>
                         <td class="actions-links">
-                            
-                            <a href="/admin/aluno/<%= aluno.id_aluno %>/editar">Editar</a>
 
-                            <form method="POST" action="/admin/aluno/<%= aluno.id_aluno %>/excluir" style="display: inline;" 
-                                  onsubmit="return confirm('Tem certeza que deseja excluir <%= aluno.nome %>? Esta ação não pode ser desfeita.');">
-                                <button type="submit" class="link-button">Excluir</button>
+                            <a href="/admin/aluno/<%= aluno.id_aluno %>/editar" class="btn-icon" title="Editar">✏️</a>
+
+                            <form method="POST" action="/admin/aluno/<%= aluno.id_aluno %>/excluir"
+                                style="display: inline;"
+                                onsubmit="return confirm('Tem certeza que deseja excluir <%= aluno.nome %>? Esta ação não pode ser desfeita.');">
+                                <button type="submit" class="btn-icon btn-delete" title="Excluir">🗑️</button>
                             </form>
 
                         </td>
                     </tr>
-                <% }) %>
-                <% if (alunos.length === 0) { %>
-                    <% } %>
+                    <% }) %>
+                        <% if (alunos.length===0) { %>
+                            <% } %>
             </tbody>
         </table>
 
-        <a href="/admin" class="btn btn-secondary" style="text-decoration: none; width: auto; margin-top: 20px;">Voltar ao Painel</a>
+        <a href="/admin" class="btn btn-secondary" style="text-decoration: none; width: auto; margin-top: 20px;">Voltar
+            ao Painel</a>
     </div>
 </body>
+
 </html>

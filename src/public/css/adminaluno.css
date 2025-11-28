@@ -1,7 +1,7 @@
 /* --- Configurações Gerais --- */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f4f7f6;
+    background-image: url(../img/fundo.jpg);
     margin: 0;
     padding: 20px;
     color: #333;
@@ -10,11 +10,12 @@ body {
 /* --- Container Principal --- */
 .container {
     max-width: 900px;
-    margin: 20px auto;
-    padding: 25px 30px;
-    background-color: #ffffff;
+    margin: 300px auto;
+    padding: 50px 30px;
+    background-color: #F2F2F2;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #34D399;
 }
 
 h2 {
@@ -63,6 +64,7 @@ h2 {
     text-decoration: none;
     font-weight: 500;
     margin-right: 10px;
+    
 }
 
 .actions-links a:hover {
@@ -99,15 +101,26 @@ h2 {
     cursor: pointer;
     border: 1px solid transparent;
     transition: background-color 0.2s;
+    
 }
 
 .btn-secondary {
     color: #fff;
     background-color: #6c757d; /* Cinza */
     border-color: #6c757d;
+    border: 1px solid #6c757d;
 }
 
 .btn-secondary:hover {
     background-color: #5a6268;
     border-color: #545b62;
+}
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 4px;
+    transition: transform 0.2s;
+    text-decoration: none;
 }

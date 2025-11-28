@@ -8,8 +8,8 @@
     --danger-color: #EF4444;        /* Red 500 */
     
     /* Backgrounds */
-    --bg-body: #F3F4F6;             /* Gray 100 */
-    --bg-card: #FFFFFF;             /* White */
+    --bg-body: #f3f6f4;             /* Gray 100 */
+    --bg-card: #F2F2F2;             /* White */
     --bg-input: #F9FAFB;            /* Gray 50 */
 
     /* Text */
@@ -18,7 +18,7 @@
     --text-light: #F9FAFB;          /* Gray 50 */
 
     /* Borders & Shadows */
-    --border-color: #E5E7EB;        /* Gray 200 */
+    --border-color: #44cd81;        /* Gray 200 */
     --radius-md: 0.5rem;            /* 8px */
     --radius-lg: 1rem;              /* 16px */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -34,7 +34,10 @@
 
 body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg-body);
+    background-image: url('../img/fundo.jpg');
+    background-size: cover;
+    background-position: center;
+
     color: var(--text-main);
     line-height: 1.5;
     min-height: 100vh;
@@ -68,11 +71,30 @@ a:hover {
     text-decoration: underline;
 }
 
+@media (max-width: 768px) {
+    .container {
+        width: 95%;         /* Aproveita mais espaço no celular */
+        margin: 20px auto;  /* Margem menor no topo */
+        padding: 15px;      /* Padding menor */
+    }
+
+    /* Força os botões a ficarem um abaixo do outro no celular */
+    .flex {
+        flex-direction: column; 
+    }
+    
+    .gap-4 {
+        gap: 0.5rem; /* Diminui o espaço entre botões */
+    }
+}
+
 /* Layout Containers */
 .container {
-    width: 100%;
-    max-width: 480px;
-    padding: 1rem;
+    width: 90%;             /* Ocupa 90% da tela (bom para celular) */
+    max-width: 900px;       /* Mas trava em 900px no computador */
+    margin: 5vh auto;       /* Margem topo/baixo dinâmica (5% da altura) */
+    padding: 30px;          /* Espaço interno */
+    border-radius: var(--radius-lg);  /* Borda arredondada */
 }
 
 .container-lg {
@@ -158,9 +180,18 @@ input[readonly] {
 }
 
 .btn-secondary {
-    background-color: transparent;
+    background-color: var(--primary-color);
     border: 1px solid var(--border-color);
-    color: var(--text-main);
+    color: white;;
+}
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 4px;
+    transition: transform 0.2s;
+    text-decoration: none;
 }
 
 .btn-secondary:hover {

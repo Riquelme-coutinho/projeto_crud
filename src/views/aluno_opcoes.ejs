@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu do Aluno - EducaTech</title>
+    <title>Opções do Aluno - EducaTech</title>
     <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/aluno_opcoes.css">
 </head>
 
 <body>
@@ -15,32 +16,28 @@
             <h2 class="mb-4">Bem-vindo ao EducaTech!</h2>
             <p class="mb-4">O que você gostaria de fazer hoje?</p>
 
-            <hr style="border-top: 1px solid var(--border-color); margin: 20px 0;">
+            <hr class="divider">
 
-            <div class="flex flex-col gap-4" style="max-width: 400px; margin: 0 auto;">
-                <a href="/jogos" class="btn btn-primary"
-                    style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px;">
-                    <span style="font-size: 1.5rem;">🎮</span>
-                    <div class="text-left">
-                        <div style="font-weight: bold;">Jogar Agora</div>
-                        <div style="font-size: 0.8rem; opacity: 0.9;">Escolha um desafio e teste seus conhecimentos
-                        </div>
+            <div class="options-container">
+                <a href="/jogos" class="btn btn-primary option-card">
+                    <span class="option-icon">🎮</span>
+                    <div class="option-content">
+                        <span class="option-title">Jogar Agora</span>
+                        <span class="option-desc">Escolha um desafio e teste seus conhecimentos</span>
                     </div>
                 </a>
 
-                <a href="/perfil" class="btn btn-secondary"
-                    style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px;">
-                    <span style="font-size: 1.5rem;">👤</span>
-                    <div class="text-left">
-                        <div style="font-weight: bold;">Meu Perfil</div>
-                        <div style="font-size: 0.8rem; opacity: 0.9;">Veja seu progresso e personalize seu avatar</div>
+                <a href="/perfil" class="btn btn-primary option-card">
+                    <span class="option-icon">👤</span>
+                    <div class="option-content">
+                        <span class="option-title">Meu Perfil</span>
+                        <span class="option-desc">Veja seu progresso e personalize seu avatar</span>
                     </div>
                 </a>
             </div>
 
             <div class="mt-4">
-                <a href="/logout" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">Sair do
-                    Sistema</a>
+                <a href="/logout" class="logout-link">Sair do Sistema</a>
             </div>
         </div>
     </div>

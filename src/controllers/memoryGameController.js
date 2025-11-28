@@ -1,87 +1,116 @@
 const db = require('../config/database');
 
-// Renderiza a página de criação de jogo
-exports.getCreatePage = (req, res) => {
+// =============================================================================
+// JOGO DA MEMÓRIA (memory_cards)
+// =============================================================================
+
+// LISTA (Admin)
+exports.getEditList = async (req, res) => {
     try {
-        res.render('criar_jogo_memoria');
+        const [rows] = await db.query('SELECT * FROM memory_cards');
+        res.render('editar_memoria_lista', { cards: rows });
     } catch (error) {
-        console.error('Erro ao renderizar página de criação:', error);
-        res.status(500).send('Erro interno do servidor.');
+        console.error('Erro ao listar cartas da memória:', error);
+        res.status(500).send('Erro interno.');
     }
 };
 
-// Cria um novo jogo e seus cards
-exports.postCreateGame = async (req, res) => {
-    let connection;
+// FORM CRIAR (Admin)
+exports.getCreateForm = (req, res) => {
+    res.render('editar_jogo_memoria', {
+        card: { pair_name: '', pair_icon: '' },
+        action: '/admin/memoria/criar',
+        pageTitle: 'Criar Par de Cartas',
+        isCreate: true
+    });
+};
+
+// POST CRIAR (Admin)
+exports.postCreate = async (req, res) => {
     try {
-        const { title, description, card_names, card_icons } = req.body;
-
-        if (!title || !card_names || !card_icons || card_names.length < 2) {
-            return res.status(400).send('Título e pelo menos 2 pares de cartas são obrigatórios.');
-        }
-
-        connection = await db.getConnection();
-        await connection.beginTransaction();
-
-        // 1. Criar o jogo
-        const [gameResult] = await connection.query(
-            'INSERT INTO memory_games (title, description) VALUES (?, ?)',
-            [title, description]
+        const { pair_name, pair_icon } = req.body;
+        await db.query(
+            'INSERT INTO memory_cards (pair_name, pair_icon) VALUES (?, ?)',
+            [pair_name, pair_icon]
         );
-        const gameId = gameResult.insertId;
-
-        // 2. Criar os cards
-        // card_names e card_icons vêm como arrays do formulário
-        const cardPromises = [];
-        for (let i = 0; i < card_names.length; i++) {
-            cardPromises.push(connection.query(
-                'INSERT INTO memory_cards (game_id, card_name, card_icon) VALUES (?, ?, ?)',
-                [gameId, card_names[i], card_icons[i]]
-            ));
-        }
-        await Promise.all(cardPromises);
-
-        await connection.commit();
-        res.redirect('/jogos');
-
+        res.redirect('/admin/memoria');
     } catch (error) {
-        if (connection) await connection.rollback();
-        console.error('Erro ao criar jogo:', error);
-        res.status(500).send('Erro ao criar o jogo.');
-    } finally {
-        if (connection) connection.release();
+        console.error('Erro ao criar carta:', error);
+        res.status(500).send('Erro ao criar.');
     }
 };
 
-// Busca um jogo específico e renderiza a view de jogar
+// FORM EDITAR (Admin)
+exports.getEditForm = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [rows] = await db.query('SELECT * FROM memory_cards WHERE id = ?', [id]);
+        if (rows.length === 0) return res.status(404).send('Carta não encontrada');
+
+        res.render('editar_jogo_memoria', {
+            card: rows[0],
+            action: `/admin/memoria/${id}/editar`,
+            pageTitle: 'Editar Par de Cartas',
+            isCreate: false
+        });
+    } catch (error) {
+        console.error('Erro ao buscar carta para edição:', error);
+        res.status(500).send('Erro interno.');
+    }
+};
+
+// POST EDITAR (Admin)
+exports.postEdit = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { pair_name, pair_icon } = req.body;
+        await db.query(
+            'UPDATE memory_cards SET pair_name = ?, pair_icon = ? WHERE id = ?',
+            [pair_name, pair_icon, id]
+        );
+        res.redirect('/admin/memoria');
+    } catch (error) {
+        console.error('Erro ao atualizar carta:', error);
+        res.status(500).send('Erro ao atualizar.');
+    }
+};
+
+// POST EXCLUIR (Admin)
+exports.postDelete = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await db.query('DELETE FROM memory_cards WHERE id = ?', [id]);
+        res.redirect('/admin/memoria');
+    } catch (error) {
+        console.error('Erro ao excluir carta:', error);
+        res.status(500).send('Erro ao excluir.');
+    }
+};
+
+// JOGAR (Aluno)
 exports.getGame = async (req, res) => {
     try {
-        const gameId = req.params.id;
+        // Busca TODAS as cartas (pares)
+        const [cardRows] = await db.query('SELECT pair_name as name, pair_icon as icon FROM memory_cards');
 
-        // Buscar informações do jogo
-        const [gameRows] = await db.query('SELECT * FROM memory_games WHERE id = ?', [gameId]);
-        if (gameRows.length === 0) {
-            return res.status(404).send('Jogo não encontrado.');
-        }
-        const game = gameRows[0];
+        const gameData = {
+            title: 'Jogo da Memória',
+            description: 'Encontre os pares iguais!'
+        };
 
-        // Buscar cartas do jogo
-        const [cardRows] = await db.query('SELECT card_name as name, card_icon as icon FROM memory_cards WHERE game_id = ?', [gameId]);
-
-        res.render('jogo_memoria', { game, cards: cardRows });
+        res.render('jogo_memoria', { game: gameData, cards: cardRows });
     } catch (error) {
-        console.error('Erro ao buscar jogo:', error);
+        console.error('Erro ao buscar jogo da memória:', error);
         res.status(500).send('Erro interno do servidor.');
     }
 };
 
-// Busca todos os jogos de memória (para a lista)
+// Helper para lista_jogos (retorna item de menu único)
 exports.getAllGames = async () => {
-    try {
-        const [rows] = await db.query('SELECT * FROM memory_games ORDER BY created_at DESC');
-        return rows;
-    } catch (error) {
-        console.error('Erro ao buscar jogos de memória:', error);
-        return [];
-    }
+    return [{
+        id: 'menu',
+        title: 'Jogo da Memória',
+        description: 'Encontre os pares!',
+        type: 'memoria'
+    }];
 };

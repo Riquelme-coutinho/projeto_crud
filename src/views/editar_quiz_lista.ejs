@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perguntas do Quiz - EducaTech</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_quiz_lista.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <div class="header-flex"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>📝 Editar Perguntas do Quiz</h2>
+                <a href="/admin/quiz/criar" class="btn btn-primary btn-small">➕ Nova Pergunta</a>
+            </div>
+            <p>Gerencie as perguntas do quiz. Clique em "Editar" para modificar ou "Excluir" para remover.</p>
+
+            <table class="quiz-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Pergunta</th>
+                        <th>Resposta</th>
+                        <th>Imagem</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% quizzes.forEach((quiz, index)=> { %>
+                        <tr>
+                            <td>
+                                <%= index + 1 %>
+                            </td>
+                            <td class="pergunta-cell" title="<%= quiz.pergunta %>">
+                                <%= quiz.pergunta %>
+                            </td>
+                            <td>
+                                <span
+                                    class="resposta-badge <%= quiz.resposta_correta === 'true' ? 'resposta-true' : 'resposta-false' %>">
+                                    <%= quiz.resposta_correta==='true' ? 'Verdadeiro' : 'Falso' %>
+                                </span>
+                            </td>
+                            <td>
+                                <% if (quiz.url_imagem) { %>
+                                    ✅ Sim
+                                    <% } else { %>
+                                        ❌ Não
+                                        <% } %>
+                            </td>
+                            <td class="actions-links">
+                                <a href="/admin/quiz/<%= quiz.id_quiz %>/editar" class="btn-icon" title="Editar">✏️</a>
+
+                                <form method="POST" action="/admin/quiz/<%= quiz.id_quiz %>/excluir"
+                                    style="display: inline;"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir esta pergunta?');">
+                                    <button type="submit" class="btn-icon btn-delete" title="Excluir">🗑️</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+
+            <a href="/admin" class="btn-voltar">⬅️ Voltar ao Painel Admin</a>
+        </div>
+    </div>
+</body>
+
+</html>

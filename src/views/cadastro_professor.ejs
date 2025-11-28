@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Professor - EducaTech</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/cadastro_professor.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <h2>Cadastro de Professor</h2>
+            <p class="text-center mb-4">Crie um novo acesso para docente ou administrador.</p>
+
+            <form id="form-cadastro-prof" method="POST" action="/admin/cadastro-professor">
+
+                <div class="form-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="usuario">Nome de Usuário</label>
+                    <input type="text" id="usuario" name="usuario" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="is_admin" name="is_admin" class="checkbox-input">
+                    <label for="is_admin" class="checkbox-label">Conceder permissão de Administrador?</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-4">Cadastrar Professor</button>
+            </form>
+
+            <div class="text-center mt-4">
+                <p>Voltar ao <a href="/admin">Painel Administrativo</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

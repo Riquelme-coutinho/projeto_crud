@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Professor - EducaTech</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin_editar_professor.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <h2>Editar Professor</h2>
+            <p>Atualize os dados do professor abaixo.</p>
+
+            <form action="/admin/professor/<%= professor.id_professor %>/editar" method="POST">
+                <div class="form-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" class="form-control" value="<%= professor.nome %>"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="usuario">Usuário (Login)</label>
+                    <input type="text" id="usuario" name="usuario" class="form-control" value="<%= professor.usuario %>"
+                        required minlength="4">
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Nova Senha (deixe em branco para manter a atual)</label>
+                    <input type="password" id="senha" name="senha" class="form-control" minlength="6">
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="is_admin" name="is_admin" <%=professor.is_admin ? 'checked' : '' %>>
+                    <label for="is_admin" class="checkbox-label">É Administrador?</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Salvar Alterações</button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <a href="/admin/professores" class="link">Voltar para a lista</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

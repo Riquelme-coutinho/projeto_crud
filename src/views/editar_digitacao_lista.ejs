@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Textos de Digitação - EducaTech</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_digitacao_lista.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <div class="header-flex"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>⌨️ Editar Textos de Digitação</h2>
+                <a href="/admin/digitacao/criar" class="btn btn-primary btn-small">➕ Novo Texto</a>
+            </div>
+            <p>Gerencie os textos do jogo de digitação.</p>
+            <table class="game-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Título</th>
+                        <th>Texto</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% texts.forEach((text, index)=> { %>
+                        <tr>
+                            <td>
+                                <%= index + 1 %>
+                            </td>
+                            <td>
+                                <%= text.title %>
+                            </td>
+                            <td class="text-cell" title="<%= text.text_content %>">
+                                <%= text.text_content %>
+                            </td>
+                            <td class="actions-links">
+                                <a href="/admin/digitacao/<%= text.id %>/editar" class="btn-icon" title="Editar">✏️</a>
+                                <form method="POST" action="/admin/digitacao/<%= text.id %>/excluir"
+                                    style="display: inline;"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este texto?');">
+                                    <button type="submit" class="btn-icon btn-delete" title="Excluir">🗑️</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <a href="/admin" class="btn-voltar">⬅️ Voltar ao Painel Admin</a>
+        </div>
+    </div>
+</body>
+
+</html>

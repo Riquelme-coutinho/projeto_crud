@@ -35,63 +35,71 @@
                                 <%= game.title %>
                             </h3>
                             <a href="/jogo/memoria/<%= game.id %>" class="btn btn-primary btn-small"
-                                style="text-align: center;">JOGAR
-                                AGORA</a>
+                                style="text-align: center;">JOGAR AGORA</a>
                         </div>
                         <% }) %>
                             <% } %>
 
-                                <!-- Quizzes -->
+                                <!-- Quiz - 10 Perguntas Fixas -->
                                 <% if (quizzes && quizzes.length> 0) { %>
-                                    <% quizzes.forEach(quiz=> { %>
+                                    <div
+                                        style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); width: 250px; padding: 15px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);">
                                         <div
-                                            style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); width: 250px; padding: 15px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);">
-                                            <img src="<%= quiz.url_imagem ? quiz.url_imagem : 'https://via.placeholder.com/250x150?text=Quiz' %>"
-                                                alt="Imagem do Jogo"
-                                                style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px; margin-bottom: 10px;">
-
-                                            <h3 style="font-size: 1.1rem; margin-bottom: 10px; flex-grow: 1;">
-                                                <%= quiz.pergunta %>
-                                            </h3>
-
-                                            <a href="/jogo/quiz/<%= quiz.id_quiz %>" class="btn btn-primary btn-small"
-                                                style="text-align: center;">JOGAR AGORA</a>
+                                            style="width: 100%; height: 150px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-radius: 4px; margin-bottom: 10px;">
+                                            🎯
                                         </div>
-                                        <% }) %>
-                                            <% } %>
+                                        <h3 style="font-size: 1.1rem; margin-bottom: 10px; flex-grow: 1;">
+                                            Quiz Educativo
+                                        </h3>
+                                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                                            10 perguntas de Verdadeiro ou Falso
+                                        </p>
+                                        <a href="/jogo/quiz" class="btn btn-primary btn-small"
+                                            style="text-align: center;">JOGAR AGORA</a>
+                                    </div>
+                                    <% } %>
 
                                         <!-- New Games (Typing, Scramble, Hangman, Math) -->
-                                        <% if (newGames && newGames.length > 0) { %>
-                                            <% newGames.forEach(game => { 
+                                        <% if (newGames && newGames.length> 0) { %>
+                                            <% newGames.forEach(game=> {
                                                 let icon = '🎮';
                                                 let url = '#';
-                                                
-                                                if (game.type === 'digitacao') { icon = '⌨️'; url = '/jogo/digitacao/' + game.id; }
-                                                else if (game.type === 'palavras') { icon = '🔠'; url = '/jogo/palavras/' + game.id; }
-                                                else if (game.type === 'forca') { icon = '😵'; url = '/jogo/forca/' + game.id; }
-                                                else if (game.type === 'matematica') { icon = '➗'; url = '/jogo/matematica/' + game.id; }
-                                            %>
-                                                <div style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); width: 250px; padding: 15px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);">
-                                                    <div style="width: 100%; height: 150px; background: #f0f9ff; display: flex; align-items: center; justify-content: center; font-size: 3rem; border-radius: 4px; margin-bottom: 10px;">
+
+                                                if (game.type === 'digitacao') { icon = '⌨️'; url = '/jogo/digitacao/' +
+                                                game.id; }
+                                                else if (game.type === 'palavras') { icon = '🔠'; url =
+                                                '/jogo/palavras/' + game.id; }
+                                                else if (game.type === 'forca') { icon = '😵'; url = '/jogo/forca/' +
+                                                game.id; }
+                                                else if (game.type === 'matematica') { icon = '➗'; url =
+                                                '/jogo/matematica/' + game.id; }
+                                                %>
+                                                <div
+                                                    style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); width: 250px; padding: 15px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);">
+                                                    <div
+                                                        style="width: 100%; height: 150px; background: #f0f9ff; display: flex; align-items: center; justify-content: center; font-size: 3rem; border-radius: 4px; margin-bottom: 10px;">
                                                         <%= icon %>
                                                     </div>
                                                     <h3 style="font-size: 1.1rem; margin-bottom: 10px; flex-grow: 1;">
                                                         <%= game.title %>
                                                     </h3>
-                                                    <a href="<%= url %>" class="btn btn-primary btn-small" style="text-align: center;">JOGAR AGORA</a>
+                                                    <a href="<%= url %>" class="btn btn-primary btn-small"
+                                                        style="text-align: center;">JOGAR AGORA</a>
                                                 </div>
-                                            <% }) %>
-                                        <% } %>
-
-                                                <!-- No games message -->
-                                                <% if ((!quizzes || quizzes.length===0) && (!memoryGames ||
-                                                    memoryGames.length===0)) { %>
-                                                    <div class="text-center"
-                                                        style="color: var(--text-muted); width: 100%;">
-                                                        <h3>Nenhum jogo disponível no momento.</h3>
-                                                        <p>Peça ao seu professor para cadastrar novos desafios!</p>
-                                                    </div>
+                                                <% }) %>
                                                     <% } %>
+
+                                                        <!-- No games message -->
+                                                        <% if ((!quizzes || quizzes.length===0) && (!memoryGames ||
+                                                            memoryGames.length===0) && (!newGames ||
+                                                            newGames.length===0)) { %>
+                                                            <div class="text-center"
+                                                                style="color: var(--text-muted); width: 100%;">
+                                                                <h3>Nenhum jogo disponível no momento.</h3>
+                                                                <p>Peça ao seu professor para cadastrar novos desafios!
+                                                                </p>
+                                                            </div>
+                                                            <% } %>
 
             </div>
         </div>

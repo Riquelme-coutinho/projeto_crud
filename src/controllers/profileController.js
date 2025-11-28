@@ -14,7 +14,7 @@ const getProfilePage = async (req, res) => {
             SELECT 
                 a.nome AS username, a.idade, a.turma, a.descricao, a.avatar,
                 COALESCE(SUM(p.pontos), 0) AS total_pontos,
-                COALESCE(COUNT(DISTINCT p.id_jogo), 0) AS total_jogos
+                COALESCE(COUNT(DISTINCT p.id_jogo_especifico), 0) AS total_jogos
             FROM alunos AS a
             LEFT JOIN pontuacoes AS p ON a.id_aluno = p.id_aluno
             WHERE a.id_aluno = ?

@@ -17,6 +17,19 @@ const profileRoutes = require('./src/routes/profileRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// SEGURANÇA (Dica: O Helmet deve vir no início, antes das rotas)
+const helmet = require('helmet');
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    strictTransportSecurity: false, // Remove HSTS
+    crossOriginOpenerPolicy: false, // Remove erro de política de abertura
+    crossOriginResourcePolicy: false, // Permite carregar recursos externos
+    originAgentCluster: false // Remove aviso de cluster
+  })
+);
+
 // 4. CONFIGURAÇÃO (Middlewares)
 // =============================================
 // Configura o EJS (views)
@@ -28,6 +41,8 @@ app.use(express.static(path.join(__dirname, 'src/public')));
 
 // Configura o leitor de formulários
 app.use(express.urlencoded({ extended: true }));
+// Configura o leitor de JSON (para requisições AJAX/fetch)
+app.use(express.json());
 
 // Configura a Sessão (DEVE VIR ANTES DAS ROTAS)
 app.use(session({
@@ -56,8 +71,8 @@ app.use(profileRoutes);
 
 // 6. INICIALIZAÇÃO DO SERVIDOR
 // =============================================
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Local: http://localhost:${PORT}`);
+    // O console avisa para você procurar o IP
+    console.log(`🌐 Rede:  http://192.168.15.5:${PORT}`); 
 });
-
-app.use(require('helmet')());

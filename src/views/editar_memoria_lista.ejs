@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Jogo da Memória - Admin</title>
+    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_memoria_lista.css">
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="card">
+            <div class="flex justify-between" style="align-items: center; margin-bottom: 20px;">
+                <h2>🧠 Editar Cartas da Memória</h2>
+                <a href="/admin/memoria/criar" class="btn btn-primary btn-small">➕ Nova Carta</a>
+            </div>
+
+            <p class="mb-4">Edite os pares de cartas que aparecerão no jogo.</p>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Ícone</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (cards && cards.length> 0) { %>
+                            <% cards.forEach(card=> { %>
+                                <tr>
+                                    <td>
+                                        <%= card.id %>
+                                    </td>
+                                    <td>
+                                        <%= card.pair_name %>
+                                    </td>
+                                    <td style="font-size: 1.5rem;">
+                                        <%= card.pair_icon %>
+                                    </td>
+                                    <td class="actions-links">
+                                        <a href="/admin/memoria/<%= card.id %>/editar"
+                                            class="btn btn-primary btn-small">Editar</a>
+                                        <form method="POST" action="/admin/memoria/<%= card.id %>/excluir"
+                                            style="display: inline;"
+                                            onsubmit="return confirm('Tem certeza que deseja excluir esta carta?');">
+                                            <button type="submit" class="btn btn-danger btn-small"
+                                                title="Excluir">Excluir</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="4" class="text-center">Nenhuma carta encontrada.</td>
+                                        </tr>
+                                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <a href="/admin" class="btn-voltar" style="margin-top: 20px; display: inline-block;">⬅️ Voltar ao Painel
+                Admin</a>
+        </div>
+    </div>
+</body>
+
+</html>

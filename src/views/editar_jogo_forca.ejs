@@ -9,74 +9,37 @@
     </title>
     <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_jogo_forca.css">
 </head>
 
 <body>
     <div class="container-lg">
         <div class="card">
             <h2>
-                <%= pageTitle %>
+                <%= isCreate ? '➕ ' + pageTitle : '✏️ ' + pageTitle %>
             </h2>
-
             <form action="<%= action %>" method="POST">
                 <div class="form-group">
-                    <label for="title">Título do Jogo</label>
-                    <input type="text" id="title" name="title" value="<%= game.title %>" required>
+                    <label for="word">Palavra</label>
+                    <input type="text" id="word" name="word" value="<%= word.word %>" required
+                        style="text-transform: uppercase;">
+                    <small>A palavra será convertida para maiúsculas automaticamente.</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="description">Descrição</label>
-                    <textarea id="description" name="description" rows="2"><%= game.description %></textarea>
+                    <label for="hint">Dica</label>
+                    <input type="text" id="hint" name="hint" value="<%= word.hint %>">
                 </div>
-
-                <div id="words-container">
-                    <h3>Palavras Secretas</h3>
-                    <% words.forEach((word, index)=> { %>
-                        <div class="word-group"
-                            style="border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 8px;">
-                            <div class="form-group">
-                                <label>Palavra <%= index + 1 %></label>
-                                <input type="text" name="words[]" value="<%= word.word %>" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Dica (Opcional)</label>
-                                <input type="text" name="hints[]" value="<%= word.hint %>">
-                            </div>
-                        </div>
-                        <% }) %>
-                </div>
-
-                <button type="button" id="add-word-btn" class="btn btn-secondary btn-small mb-4">+ Adicionar
-                    Palavra</button>
 
                 <div class="flex gap-4 mt-4">
-                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                    <a href="/admin" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">
+                        <%= isCreate ? '✨ Criar Palavra' : '💾 Salvar Alterações' %>
+                    </button>
+                    <a href="/admin/forca" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>
     </div>
-
-    <script>
-        document.getElementById('add-word-btn').addEventListener('click', () => {
-            const container = document.getElementById('words-container');
-
-            const div = document.createElement('div');
-            div.className = 'word-group';
-            div.style = 'border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 8px;';
-            div.innerHTML = `
-                <div class="form-group">
-                    <label>Nova Palavra</label>
-                    <input type="text" name="words[]" required>
-                </div>
-                <div class="form-group">
-                    <label>Dica (Opcional)</label>
-                    <input type="text" name="hints[]">
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    </script>
 </body>
 
 </html>

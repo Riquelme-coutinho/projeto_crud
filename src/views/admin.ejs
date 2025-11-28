@@ -14,7 +14,7 @@
         <div class="card">
             <div class="text-center mb-4">
                 <h2>Painel do Professor</h2>
-                <p>Gerencie seus alunos e jogos aqui.</p>
+                <p>Gerencie seus alunos e jogos.</p>
             </div>
 
             <hr style="border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
@@ -25,8 +25,14 @@
                     <a href="/admin/alunos" class="btn btn-primary" style="flex: 1;">
                         👥 Gerenciar Alunos
                     </a>
-                    <a href="/cadastro" class="btn btn-secondary" style="flex: 1;">
+                    <a href="/cadastro" class="btn btn-primary" style="flex: 1;">
                         ➕ Cadastrar Aluno
+                    </a>
+                    <a href="/admin/cadastro-professor" class="btn btn-primary" style="flex: 1;">
+                        🎓 Cadastrar Professor
+                    </a>
+                    <a href="/admin/professores" class="btn btn-primary" style="flex: 1;">
+                        👥 Gerenciar Professores
                     </a>
                 </div>
             </div>
@@ -34,58 +40,32 @@
             <div class="form-group">
                 <label>Conteúdo - Criar Jogos</label>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <a href="/admin/quiz/novo" class="btn btn-primary">
-                        ❓ Quiz
+                    <a href="/admin/quiz/editar" class="btn btn-primary">
+                        ❓ Quiz (10 Perguntas)
                     </a>
-                    <a href="/admin/memoria/novo" class="btn btn-primary">
-                        🧠 Memória
+                    <a href="/admin/memoria" class="btn btn-primary btn-memory">
+                        🧠 Jogo da Memória
                     </a>
-                    <a href="/admin/digitacao/novo" class="btn btn-primary">
-                        ⌨️ Digitação
+                    <a href="/admin/digitacao" class="btn btn-primary">
+                        ⌨️ Digitação (5 Textos)
                     </a>
-                    <a href="/admin/palavras/novo" class="btn btn-primary">
-                        🔠 Palavras (Scramble)
+                    <a href="/admin/palavras" class="btn btn-primary">
+                        🔠 Palavras (10 Itens)
                     </a>
-                    <a href="/admin/forca/novo" class="btn btn-primary">
-                        😵 Forca
+                    <a href="/admin/forca" class="btn btn-primary">
+                        😵 Forca (10 Itens)
                     </a>
-                    <a href="/admin/matematica/novo" class="btn btn-primary">
-                        ➗ Matemática
+                    <a href="/admin/matematica" class="btn btn-primary">
+                        ➗ Matemática (5 Níveis)
                     </a>
                 </div>
             </div>
 
             <hr style="border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
 
-            <div class="form-group">
-                <label>Meus Jogos Criados</label>
-                <% if (typeof games !=='undefined' && games.length> 0) { %>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <% games.forEach(game=> { %>
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
-                                <div>
-                                    <strong>
-                                        <%= game.title %>
-                                    </strong>
-                                    <span style="font-size: 0.8rem; color: #666; margin-left: 10px;">
-                                        (<%= game.type.charAt(0).toUpperCase() + game.type.slice(1) %>)
-                                    </span>
-                                </div>
-                                <a href="/admin/<%= game.type %>/<%= game.id %>/editar"
-                                    class="btn btn-secondary btn-small">
-                                    ✏️ Editar
-                                </a>
-                            </div>
-                            <% }) %>
-                    </div>
-                    <% } else { %>
-                        <p style="color: #666; font-style: italic;">Você ainda não criou nenhum jogo.</p>
-                        <% } %>
-            </div>
 
             <div class="mt-4">
-                <a href="/logout" class="btn btn-secondary">
+                <a href="/logout" class="btn btn-primary">
                     Sair do Sistema
                 </a>
             </div>

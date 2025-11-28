@@ -1,80 +1,54 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<div class="form-group">
+    <label for="description">Descrição (Opcional)</label>
+    <textarea id="description" name="description" rows="2"><%= game.description %></textarea>
+</div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= pageTitle %> - EducaTech
-    </title>
-    <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-
-<body>
-    <div class="container-lg">
-        <div class="card">
-            <h2>
-                <%= pageTitle %>
-            </h2>
-
-            <form action="<%= action %>" method="POST">
-                <div class="form-group">
-                    <label for="title">Título do Quiz</label>
-                    <input type="text" id="title" name="title" value="<%= game.title %>" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Descrição (Opcional)</label>
-                    <textarea id="description" name="description" rows="2"><%= game.description %></textarea>
-                </div>
-
-                <div id="questions-container">
-                    <h3>Perguntas</h3>
-                    <% questions.forEach((q, index)=> { %>
-                        <div class="question-group"
-                            style="border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px; background: #f9f9f9;">
-                            <div class="form-group">
-                                <label>Pergunta <%= index + 1 %></label>
-                                <input type="text" name="questions[]" value="<%= q.question %>" required>
-                            </div>
-                            <div class="form-group">
-                                <label>URL da Imagem (Opcional)</label>
-                                <input type="text" name="images[]" value="<%= q.image_url %>">
-                            </div>
-                            <div class="form-group">
-                                <label>Resposta Correta</label>
-                                <select name="answers[]" required>
-                                    <option value="true" <%=q.correct_answer===true ? 'selected' : '' %>>Verdadeiro
-                                    </option>
-                                    <option value="false" <%=q.correct_answer===false ? 'selected' : '' %>>Falso
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <% }) %>
-                </div>
-
-                <button type="button" id="add-question-btn" class="btn btn-secondary btn-small mb-4">+ Adicionar
-                    Pergunta</button>
-
-                <div class="flex gap-4 mt-4">
-                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                    <a href="/admin" class="btn btn-secondary">Cancelar</a>
-                </div>
-            </form>
+<div id="questions-container">
+    <h3>Perguntas</h3>
+    <% questions.forEach((q, index)=> { %>
+        <div class="question-group"
+            style="border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px; background: #f9f9f9;">
+            <div class="form-group">
+                <label>Pergunta <%= index + 1 %></label>
+                <input type="text" name="questions[]" value="<%= q.question %>" required>
+            </div>
+            <div class="form-group">
+                <label>URL da Imagem (Opcional)</label>
+                <input type="text" name="images[]" value="<%= q.image_url %>">
+            </div>
+            <div class="form-group">
+                <label>Resposta Correta</label>
+                <select name="answers[]" required>
+                    <option value="true" <%=q.correct_answer===true ? 'selected' : '' %>>Verdadeiro
+                    </option>
+                    <option value="false" <%=q.correct_answer===false ? 'selected' : '' %>>Falso
+                    </option>
+                </select>
+            </div>
         </div>
-    </div>
+        <% }) %>
+</div>
 
-    <script>
-        document.getElementById('add-question-btn').addEventListener('click', () => {
-            const container = document.getElementById('questions-container');
-            const count = container.querySelectorAll('.question-group').length + 1;
+<button type="button" id="add-question-btn" class="btn btn-secondary btn-small mb-4">+ Adicionar
+    Pergunta</button>
 
-            const div = document.createElement('div');
-            div.className = 'question-group';
-            div.style = 'border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px; background: #f9f9f9;';
-            div.innerHTML = `
+<div class="flex gap-4 mt-4">
+    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+    <a href="/admin" class="btn btn-secondary">Cancelar</a>
+</div>
+</form>
+</div>
+</div>
+
+<script>
+    document.getElementById('add-question-btn').addEventListener('click', () => {
+        const container = document.getElementById('questions-container');
+        const count = container.querySelectorAll('.question-group').length + 1;
+
+        const div = document.createElement('div');
+        div.className = 'question-group';
+        div.style = 'border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px; background: #f9f9f9;';
+        div.innerHTML = `
                 <div class="form-group">
                     <label>Pergunta ${count}</label>
                     <input type="text" name="questions[]" required>
@@ -91,9 +65,9 @@
                     </select>
                 </div>
             `;
-            container.appendChild(div);
-        });
-    </script>
+        container.appendChild(div);
+    });
+</script>
 </body>
 
 </html>

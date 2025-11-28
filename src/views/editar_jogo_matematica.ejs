@@ -9,60 +9,57 @@
     </title>
     <link rel="icon" href="/img/logo-educatech.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_jogo_matematica.css">
 </head>
 
 <body>
     <div class="container-lg">
         <div class="card">
             <h2>
-                <%= pageTitle %>
+                <%= isCreate ? '➕ ' + pageTitle : '✏️ ' + pageTitle %>
             </h2>
-
             <form action="<%= action %>" method="POST">
                 <div class="form-group">
-                    <label for="title">Título do Jogo</label>
-                    <input type="text" id="title" name="title" value="<%= game.title %>" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Descrição</label>
-                    <textarea id="description" name="description" rows="2"><%= game.description %></textarea>
+                    <label for="title">Título do Nível</label>
+                    <input type="text" id="title" name="title" value="<%= level.title %>" required>
                 </div>
 
                 <div class="form-group">
                     <label>Operações Permitidas</label>
                     <div style="display: flex; gap: 20px;">
                         <label><input type="checkbox" name="operations" value="+"
-                                <%=game.config.operations.includes('+') ? 'checked' : '' %>> Soma (+)</label>
+                                <%=level.config.operations.includes('+') ? 'checked' : '' %>> Soma (+)</label>
                         <label><input type="checkbox" name="operations" value="-"
-                                <%=game.config.operations.includes('-') ? 'checked' : '' %>> Subtração (-)</label>
+                                <%=level.config.operations.includes('-') ? 'checked' : '' %>> Subtração (-)</label>
                         <label><input type="checkbox" name="operations" value="*"
-                                <%=game.config.operations.includes('*') ? 'checked' : '' %>> Multiplicação (×)</label>
+                                <%=level.config.operations.includes('*') ? 'checked' : '' %>> Multiplicação (×)</label>
                         <label><input type="checkbox" name="operations" value="/"
-                                <%=game.config.operations.includes('/') ? 'checked' : '' %>> Divisão (÷)</label>
+                                <%=level.config.operations.includes('/') ? 'checked' : '' %>> Divisão (÷)</label>
                     </div>
                 </div>
 
                 <div class="flex gap-4">
                     <div class="form-group w-full">
                         <label for="min">Valor Mínimo</label>
-                        <input type="number" id="min" name="min" value="<%= game.config.min %>" required>
+                        <input type="number" id="min" name="min" value="<%= level.config.min %>" required>
                     </div>
                     <div class="form-group w-full">
                         <label for="max">Valor Máximo</label>
-                        <input type="number" id="max" name="max" value="<%= game.config.max %>" required>
+                        <input type="number" id="max" name="max" value="<%= level.config.max %>" required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="questions">Número de Perguntas</label>
-                    <input type="number" id="questions" name="questions" value="<%= game.config.questions %>" min="1"
+                    <input type="number" id="questions" name="questions" value="<%= level.config.questions %>" min="1"
                         max="50" required>
                 </div>
 
                 <div class="flex gap-4 mt-4">
-                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                    <a href="/admin" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">
+                        <%= isCreate ? '✨ Criar Nível' : '💾 Salvar Alterações' %>
+                    </button>
+                    <a href="/admin/matematica" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 const { checarSeAdmin } = require('../middleware/authMiddleware');
-const quizController = require('../controllers/quizController');
 const memoryGameController = require('../controllers/memoryGameController');
 
 // --- Rotas Públicas ---
@@ -39,12 +38,19 @@ router.get('/admin/aluno/:id/editar', checarSeAdmin, authController.getEditarAlu
 router.post('/admin/aluno/:id/editar', checarSeAdmin, authController.postEditarAluno);
 router.post('/admin/aluno/:id/excluir', checarSeAdmin, authController.postExcluirAluno);
 
-// Gestão de Quiz
-router.get('/admin/quiz/novo', checarSeAdmin, quizController.getQuizForm);
-router.post('/admin/quiz/novo', checarSeAdmin, quizController.postQuiz);
+// Gestão de Professores
+router.get('/admin/cadastro-professor', checarSeAdmin, authController.getRegisterProfessorPage);
+router.post('/admin/cadastro-professor', checarSeAdmin, [
+    body('nome').notEmpty().withMessage('Nome é obrigatório'),
+    body('usuario').isLength({ min: 4 }).withMessage('Usuário deve ter no mínimo 4 caracteres'),
+    body('senha').isLength({ min: 6 }).withMessage('Senha deve ter no mínimo 6 caracteres')
+], authController.postRegisterProfessor);
 
-// Gestão de Jogo da Memória
-router.get('/admin/memoria/novo', checarSeAdmin, memoryGameController.getCreatePage);
-router.post('/admin/memoria/novo', checarSeAdmin, memoryGameController.postCreateGame);
+router.get('/admin/professores', checarSeAdmin, authController.getProfessoresPage);
+router.get('/admin/professor/:id/editar', checarSeAdmin, authController.getEditarProfessorPage);
+router.post('/admin/professor/:id/editar', checarSeAdmin, authController.postEditarProfessor);
+router.post('/admin/professor/:id/excluir', checarSeAdmin, authController.postExcluirProfessor);
+
+
 
 module.exports = router;
